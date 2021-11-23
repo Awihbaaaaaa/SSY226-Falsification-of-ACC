@@ -26,8 +26,9 @@ amax_ego = 3;
 
 %RL Agent definitions
 agentblk = [mdl '/RL Agent'];
+nrObs = 4;
 
-observationInfo = rlNumericSpec([3 1],'LowerLimit',-inf*ones(3,1),'UpperLimit',inf*ones(3,1));
+observationInfo = rlNumericSpec([nrObs 1],'LowerLimit',-inf*ones(nrObs,1),'UpperLimit',inf*ones(nrObs,1));
 observationInfo.Name = 'observations';
 observationInfo.Description = 'information on velocity error and ego velocity';
 
@@ -42,7 +43,7 @@ rng('default');
 L = 48; % number of neurons
 
 statePath = [
-    featureInputLayer(3,'Normalization','none','Name','observation')
+    featureInputLayer(nrObs,'Normalization','none','Name','observation')
     fullyConnectedLayer(L,'Name','fc1')
     reluLayer('Name','relu1')
     fullyConnectedLayer(L,'Name','fc2')
@@ -73,7 +74,7 @@ critic = rlQValueRepresentation(criticNetwork,observationInfo,actionInfo,...
 
 % The actor network decides which action should be taken
 actorNetwork = [
-    featureInputLayer(3,'Normalization','none','Name','observation')
+    featureInputLayer(nrObs,'Normalization','none','Name','observation')
     fullyConnectedLayer(L,'Name','fc1')
     reluLayer('Name','relu1')
     fullyConnectedLayer(L,'Name','fc2')
@@ -107,7 +108,7 @@ trainingOpts = rlTrainingOptions(...
     'Verbose',false,...
     'Plots','training-progress',...
     'StopTrainingCriteria','EpisodeReward',...
-    'StopTrainingValue',260);
+    'StopTrainingValue',500);
 
 %trainOpts.ParallelizationOptions.StepsUntilDataIsSent = 132;
 
@@ -116,6 +117,7 @@ doTraining = true;
 if doTraining    
     % Train the agent.
     trainingStats = train(agent,env,trainingOpts);
+    save("agent5_reward_4_high_speed.mat","agent");
 else
     % Load a pretrained agent for the example.
     load('SimulinkACCDDPG.mat','agent')       
