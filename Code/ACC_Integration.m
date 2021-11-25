@@ -26,7 +26,8 @@ amax_ego = 3;
 
 %RL Agent definitions
 agentblk = [mdl '/RL Agent'];
-nrObs = 4;
+
+nrObs = 3;
 
 observationInfo = rlNumericSpec([nrObs 1],'LowerLimit',-inf*ones(nrObs,1),'UpperLimit',inf*ones(nrObs,1));
 observationInfo.Name = 'observations';
@@ -51,7 +52,8 @@ statePath = [
     reluLayer('Name','relu2')
     fullyConnectedLayer(L,'Name','fc3')
     reluLayer('Name','relu3')
-    fullyConnectedLayer(1,'Name','fc4')];
+    fullyConnectedLayer(1,'Name','fc4')
+    ];
 
 actionPath = [
     featureInputLayer(1,'Normalization','none','Name','action')
@@ -100,7 +102,7 @@ agentOptions.NoiseOptions.VarianceDecayRate = 1e-5;
 
 agent = rlDDPGAgent(actor,critic,agentOptions);
 
-maxepisodes = 150;
+maxepisodes = 200;
 maxsteps = ceil(Tf/Ts);
 trainingOpts = rlTrainingOptions(...
     'MaxEpisodes',maxepisodes,...
@@ -117,7 +119,7 @@ doTraining = true;
 if doTraining    
     % Train the agent.
     trainingStats = train(agent,env,trainingOpts);
-    save("agent5_reward_4_high_speed.mat","agent");
+    save("agent7.mat","agent");
 else
     % Load a pretrained agent for the example.
     load('SimulinkACCDDPG.mat','agent')       
