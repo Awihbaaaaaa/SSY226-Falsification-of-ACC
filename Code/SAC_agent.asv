@@ -86,7 +86,12 @@ actor = rlStochasticActorRepresentation(actNet, obsInfo, actInfo, 'Observation',
 % Checking the actor
 % getAction(actor,{ones(3,1)})
 
-% Critic Network 
+
+
+
+%%
+
+% Network 2 TO TEST
 % observation path layers
 obsPath = [featureInputLayer(nrObs, 'Normalization','none','Name','myobs') 
     fullyConnectedLayer(1,'Name','obsout')];
@@ -100,32 +105,22 @@ comPath = [additionLayer(2,'Name', 'add')  fullyConnectedLayer(1, 'Name', 'outpu
 
 % add layers to network object
 criticNet = addLayers(layerGraph(obsPath),actPath); 
-criticNet = addLayers(criticNet,comPath);
+criticNet = addLayers(actNet,comPath);
 
 % connect layers
-criticNet = connectLayers(criticNet,'obsout','add/in1');
-criticNet = connectLayers(criticNet,'actout','add/in2');
-
-critic = rlQValueRepresentation(criticNet,obsInfo,actInfo,'Observation',{'myobs'},'Action',{'myact'});
-
-% Checking the critic network
-% getValue(critic,{rand(3,1)},{rand(1,1)})
-
-% Specifying options for SAC agent
-opt = rlSACAgentOptions('DiscountFactor',0.95);
-
-opt.SampleTime = 0.1;
-
-% Higher entropy target encourage more exploration
-opt.EntropyWeightOptions.TargetEntropy = -5;
-
-opt.MiniBatchSize = 32;
-
-agent = rlSACAgent(actor,critic,opt);
+actNet = connectLayers(actNet,'obsout','add/in1');
+actNet = connectLayers(actNet,'actout','add/in2');
 
 
 
-%% 
+%%
+clc
+critic = rlQValueRepresentation(actNet,obsInfo,actInfo,'Observation',{'myobs'},'Action',{'myact'});
+
+
+
+
+
 
 
 
