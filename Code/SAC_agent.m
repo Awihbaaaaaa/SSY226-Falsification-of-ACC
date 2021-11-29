@@ -42,3 +42,5 @@ actInfo.Name = 'acceleration';
 % Define environment
 env = rlSimulinkEnv(mdl, agentblk, obsInfo,actInfo);
 
+% The number of neurons
+L = 10;
