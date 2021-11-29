@@ -29,29 +29,35 @@ agentblk = [mdl '/RL Agent'];
 
 nrObs = 3;
 
+% Getting the observation info
 observationInfo = rlNumericSpec([nrObs 1],'LowerLimit',-inf*ones(nrObs,1),'UpperLimit',inf*ones(nrObs,1));
 observationInfo.Name = 'observations';
 observationInfo.Description = 'information on velocity error and ego velocity';
 
+% Changed the upperlimit from 2
 actionInfo = rlNumericSpec([1 1],'LowerLimit',-3,'UpperLimit',3);
 actionInfo.Name = 'acceleration';
 
+% Creating the environment interface
 env = rlSimulinkEnv(mdl,agentblk,observationInfo,actionInfo);
+
+% The reset function randomizes the initial position of the lead car.
 env.ResetFcn = @(in)localResetFcn(in);
 
 rng('default');
 
-L = 48; % number of neurons
+% Change to a much smaller network
+L = 10; % number of neurons
 
 statePath = [
     featureInputLayer(nrObs,'Normalization','none','Name','observation')
     fullyConnectedLayer(L,'Name','fc1')
-    reluLayer('Name','relu1')
-    fullyConnectedLayer(L,'Name','fc2')
+    %reluLayer('Name','relu1')
+    %fullyConnectedLayer(L,'Name','fc2')
     additionLayer(2,'Name','add')
     reluLayer('Name','relu2')
-    fullyConnectedLayer(L,'Name','fc3')
-    reluLayer('Name','relu3')
+%     fullyConnectedLayer(L,'Name','fc3')
+%     reluLayer('Name','relu3')
     fullyConnectedLayer(1,'Name','fc4')
     ];
 
@@ -78,16 +84,16 @@ critic = rlQValueRepresentation(criticNetwork,observationInfo,actionInfo,...
 actorNetwork = [
     featureInputLayer(nrObs,'Normalization','none','Name','observation')
     fullyConnectedLayer(L,'Name','fc1')
-    reluLayer('Name','relu1')
-    fullyConnectedLayer(L,'Name','fc2')
-    reluLayer('Name','relu2')
-    fullyConnectedLayer(L,'Name','fc3')
+%     reluLayer('Name','relu1')
+%     fullyConnectedLayer(L,'Name','fc2')
+%     reluLayer('Name','relu2')
+%     fullyConnectedLayer(L,'Name','fc3')
     reluLayer('Name','relu3')
     fullyConnectedLayer(1,'Name','fc4')
     tanhLayer('Name','tanh1')
     scalingLayer('Name','ActorScaling1','Scale',2.5,'Bias',-0.5)];
 
-actorOptions = rlRepresentationOptions('LearnRate',1e-2,'GradientThreshold',1,'L2RegularizationFactor',1e-4);
+actorOptions = rlRepresentationOptions('LearnRate',1e-4,'GradientThreshold',1,'L2RegularizationFactor',1e-4);
 actor = rlDeterministicActorRepresentation(actorNetwork,observationInfo,actionInfo,...
     'Observation',{'observation'},'Action',{'ActorScaling1'},actorOptions);
 
