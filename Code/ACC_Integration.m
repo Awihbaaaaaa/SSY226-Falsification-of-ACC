@@ -26,6 +26,9 @@ amax_ego = 3;
 
 v_min_lead = 0;
 v_max_lead = 100;
+
+v_min_ego = 0;
+v_max_ego = 100;
 %RL Agent definitions
 agentblk = [mdl '/RL Agent'];
 
