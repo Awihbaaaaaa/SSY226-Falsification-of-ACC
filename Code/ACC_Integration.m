@@ -24,6 +24,8 @@ v_set = 30;
 amin_ego = -3;
 amax_ego = 3;
 
+v_min_lead = 0;
+v_max_lead = 100;
 %RL Agent definitions
 agentblk = [mdl '/RL Agent'];
 
@@ -99,7 +101,7 @@ agentOptions.NoiseOptions.VarianceDecayRate = 1e-5;
 
 agent = rlDDPGAgent(actor,critic,agentOptions);
 
-maxepisodes = 150;
+maxepisodes = 100;
 maxsteps = ceil(Tf/Ts);
 trainingOpts = rlTrainingOptions(...
     'MaxEpisodes',maxepisodes,...
@@ -116,10 +118,25 @@ doTraining = true;
 if doTraining    
     % Train the agent.
     trainingStats = train(agent,env,trainingOpts);
+    save("agent1.mat","agent");
 else
     % Load a pretrained agent for the example.
-    load('SimulinkACCDDPG.mat','agent')       
+    load('agent1.mat','agent')       
 end
 
-% sim(mdl)
+
+x0_lead = 50;   % initial position for lead car (m)
+v0_lead = 25;   % initial velocity for lead car (m/s)
+
+x0_ego = 10;   % initial position for ego car (m)
+v0_ego = 20;   % initial velocity for ego car (m/s)
+
+t_gap = 1.4;
+D_default = 10;
+
+v_set = 30;
+
+amin_ego = -3;
+amax_ego = 3;
+sim(mdl)
 % rlACCplot(logsout,D_default,t_gap,v_set)
