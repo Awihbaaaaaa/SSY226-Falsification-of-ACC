@@ -116,7 +116,7 @@ trainingOpts = rlTrainingOptions(...
 
 %trainOpts.ParallelizationOptions.StepsUntilDataIsSent = 132;
 
-doTraining = true;
+doTraining = false;
 
 if doTraining    
     % Train the agent.
@@ -124,11 +124,11 @@ if doTraining
     save("agent1.mat","agent");
 else
     % Load a pretrained agent for the example.
-    load('agent1.mat','agent')       
+    load('agent_vlead100_vego100.mat','agent')       
 end
 
 
-x0_lead = 50;   % initial position for lead car (m)
+x0_lead = 40;   % initial position for lead car (m)
 v0_lead = 25;   % initial velocity for lead car (m/s)
 
 x0_ego = 10;   % initial position for ego car (m)
