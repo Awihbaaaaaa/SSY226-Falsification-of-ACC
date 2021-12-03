@@ -11,10 +11,10 @@ Tf = 200;
 G_ego = tf(1,[0.5,1,0]);
 
 x0_lead = 50;   % initial position for lead car (m)
-v0_lead = 25;   % initial velocity for lead car (m/s)
+v0_lead = 0;   % initial velocity for lead car (m/s)
 
 x0_ego = 10;   % initial position for ego car (m)
-v0_ego = 20;   % initial velocity for ego car (m/s)
+v0_ego = 0;   % initial velocity for ego car (m/s)
 
 t_gap = 1.4;
 D_default = 10;
@@ -25,10 +25,10 @@ amin_ego = -3;
 amax_ego = 3;
 
 v_min_lead = 0;
-v_max_lead = 240;
+v_max_lead = 66.6;
 
 v_min_ego = 0;
-v_max_ego = 240;
+v_max_ego = 66.6;
 %RL Agent definitions
 agentblk = [mdl '/RL Agent'];
 
@@ -45,53 +45,8 @@ env.ResetFcn = @(in)localResetFcn(in);
 
 rng('default');
 
-% L = 48; % number of neurons
-% 
-% statePath = [
-%     featureInputLayer(3,'Normalization','none','Name','observation')
-%     fullyConnectedLayer(L,'Name','fc1')
-%     reluLayer('Name','relu1')
-%     fullyConnectedLayer(L,'Name','fc2')
-%     additionLayer(2,'Name','add')
-%     reluLayer('Name','relu2')
-%     fullyConnectedLayer(L,'Name','fc3')
-%     reluLayer('Name','relu3')
-%     fullyConnectedLayer(1,'Name','fc4')];
-% 
-% actionPath = [
-%     featureInputLayer(1,'Normalization','none','Name','action')
-%     fullyConnectedLayer(L, 'Name', 'fc5')];
-% 
-% % The critic network tells how good the action found from the actor action 
-% % and how it should adjust 
-% criticNetwork = layerGraph(statePath);
-% criticNetwork = addLayers(criticNetwork, actionPath);
-%     
-% criticNetwork = connectLayers(criticNetwork,'fc5','add/in2');
-% 
-% plot(criticNetwork)
-% 
-% criticOptions = rlRepresentationOptions('LearnRate',1e-3,'GradientThreshold',1,'L2RegularizationFactor',1e-4);
-% 
-% critic = rlQValueRepresentation(criticNetwork,observationInfo,actionInfo,...
-%     'Observation',{'observation'},'Action',{'action'},criticOptions);
-% 
-% 
-% % The actor network decides which action should be taken
-% actorNetwork = [
-%     featureInputLayer(3,'Normalization','none','Name','observation')
-%     fullyConnectedLayer(L,'Name','fc1')
-%     reluLayer('Name','relu1')
-%     fullyConnectedLayer(L,'Name','fc2')
-%     reluLayer('Name','relu2')
-%     fullyConnectedLayer(L,'Name','fc3')
-%     reluLayer('Name','relu3')
-%     fullyConnectedLayer(1,'Name','fc4')
-%     tanhLayer('Name','tanh1')
-%     scalingLayer('Name','ActorScaling1','Scale',2.5,'Bias',-0.5)];
-
 % Change to a much smaller network
-L = 8; % number of neurons
+L = 6; % number of neurons
 
 statePath = [
     featureInputLayer(nrObs,'Normalization','none','Name','observation')
@@ -170,7 +125,7 @@ doTraining = true;
 if doTraining    
     % Train the agent.
     trainingStats = train(agent,env,trainingOpts);
-    save("second_try.mat","agent");
+    save("agent_fixed_d_min_small_net.mat","agent");
 else
     % Load a pretrained agent for the example.
     load("agent_fixed_d_min_small_net.mat","agent")       
@@ -178,11 +133,11 @@ end
 
 %%
 % load("agent_fixed_d_min_small_net.mat","agent")
-x0_lead = 40;   % initial position for lead car (m)
-v0_lead = 25;   % initial velocity for lead car (m/s)
+x0_lead = 300;   % initial position for lead car (m)
+v0_lead = 0;   % initial velocity for lead car (m/s)
 
 x0_ego = 10;   % initial position for ego car (m)
-v0_ego = 20;   % initial velocity for ego car (m/s)
+v0_ego = 0;   % initial velocity for ego car (m/s)
 
 t_gap = 1.4;
 D_default = 10;
