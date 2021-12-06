@@ -1,8 +1,17 @@
 x0_lead = 50;   % initial position for lead car (m)
+<<<<<<< Updated upstream:Code/ReinforcementLearning_ACC_Example/ReinforcementLearning_ACC_Example/AdaptiveRL.m
 v0_lead = 25;   % initial velocity for lead car (m/s)
 x0_ego = 10;    % initial position for ego car (m)
 v0_ego = 20;    % initial velocity for ego car (m/s)
 
+=======
+v0_lead = 0;   % initial velocity for lead car (m/s)
+
+x0_ego = 10;   % initial position for ego car (m)
+v0_ego = 0;   % initial velocity for ego car (m/s)
+
+t_gap = 1.4;
+>>>>>>> Stashed changes:Code/Small network, fixed dmin and right error/ACC_Integration.m
 D_default = 10;
 t_gap = 1.4;
 v_set = 30;
@@ -93,6 +102,11 @@ trainingOpts = rlTrainingOptions(...
     'StopTrainingCriteria','EpisodeReward',...
     'StopTrainingValue',260);
 
+<<<<<<< Updated upstream:Code/ReinforcementLearning_ACC_Example/ReinforcementLearning_ACC_Example/AdaptiveRL.m
+=======
+%trainOpts.ParallelizationOptions.StepsUntilDataIsSent = 132;
+
+>>>>>>> Stashed changes:Code/Small network, fixed dmin and right error/ACC_Integration.m
 doTraining = true;
 
 if doTraining    
