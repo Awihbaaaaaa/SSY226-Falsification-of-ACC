@@ -29,6 +29,7 @@ v_max_lead = 100;
 
 v_min_ego = 0;
 v_max_ego = 100;
+
 %RL Agent definitions
 agentblk = [mdl '/RL Agent'];
 
@@ -124,15 +125,16 @@ if doTraining
     save("agent1.mat","agent");
 else
     % Load a pretrained agent for the example.
-    load('agent_vlead100_vego100.mat','agent')       
+    load('agent1.mat','agent')       
 end
 
+%For the Simulation
 
-x0_lead = 40;   % initial position for lead car (m)
-v0_lead = 25;   % initial velocity for lead car (m/s)
+x0_lead = 50;   % initial position for lead car (m)
+v0_lead = 0;   % initial velocity for lead car (m/s)
 
-x0_ego = 10;   % initial position for ego car (m)
-v0_ego = 20;   % initial velocity for ego car (m/s)
+x0_ego = 10;    % initial position for ego car (m)
+v0_ego = 0;   % initial velocity for ego car (m/s)
 
 t_gap = 1.4;
 D_default = 10;
@@ -141,5 +143,6 @@ v_set = 30;
 
 amin_ego = -3;
 amax_ego = 3;
+
 sim(mdl)
 % rlACCplot(logsout,D_default,t_gap,v_set)
