@@ -120,24 +120,24 @@ trainingOpts = rlTrainingOptions(...
 
 %trainOpts.ParallelizationOptions.StepsUntilDataIsSent = 132;
 
-doTraining = false;
+doTraining = true;
 
 if doTraining    
     % Train the agent.
     trainingStats = train(agent,env,trainingOpts);
-    save("agent_fixed_d_min_small_net.mat","agent");
+    save("test.mat","agent");
 else
     % Load a pretrained agent for the example.
-    load("agent_fixed_d_min_small_net.mat","agent")       
+    load("40ep.mat","agent")       
 end
 
 %%
 % load("agent_fixed_d_min_small_net.mat","agent")
 % x0_lead = 50;   % initial position for lead car (m)
-% v0_lead = 5;   % initial velocity for lead car (m/s)
+% v0_lead = 10;   % initial velocity for lead car (m/s)
 % 
 % x0_ego = 10;   % initial position for ego car (m)
-% v0_ego = 0;   % initial velocity for ego car (m/s)
+% v0_ego = 2;   % initial velocity for ego car (m/s)
 % 
 % t_gap = 1.4;
 % D_default = 10;

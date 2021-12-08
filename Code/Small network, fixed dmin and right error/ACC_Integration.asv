@@ -125,26 +125,26 @@ doTraining = false;
 if doTraining    
     % Train the agent.
     trainingStats = train(agent,env,trainingOpts);
-    save("agent_fixed_d_min_small_net.mat","agent");
+    save("40ep.mat","agent");
 else
     % Load a pretrained agent for the example.
-    load("agent_fixed_d_min_small_net.mat","agent")       
+    load("40ep.mat","agent")       
 end
 
 %%
 % load("agent_fixed_d_min_small_net.mat","agent")
-% x0_lead = 50;   % initial position for lead car (m)
-% v0_lead = 5;   % initial velocity for lead car (m/s)
-% 
-% x0_ego = 10;   % initial position for ego car (m)
-% v0_ego = 0;   % initial velocity for ego car (m/s)
-% 
-% t_gap = 1.4;
-% D_default = 10;
-% 
-% v_set = 30;
-% 
-% amin_ego = -3;
-% amax_ego = 3;
-% sim(mdl)
+x0_lead = 30;   % initial position for lead car (m)
+v0_lead = 10;   % initial velocity for lead car (m/s)
+
+x0_ego = 10;   % initial position for ego car (m)
+v0_ego = 5;   % initial velocity for ego car (m/s)
+
+t_gap = 1.4;
+D_default = 10;
+
+v_set = 30;
+
+amin_ego = -3;
+amax_ego = 3;
+sim(mdl)
 % rlACCplot(logsout,D_default,t_gap,v_set)
