@@ -131,7 +131,7 @@ else
     load("agent_fixed_d_min_small_net.mat","agent")       
 end
 
-%%
+
 % load("agent_fixed_d_min_small_net.mat","agent")
 x0_lead = 300;   % initial position for lead car (m)
 v0_lead = 0;   % initial velocity for lead car (m/s)

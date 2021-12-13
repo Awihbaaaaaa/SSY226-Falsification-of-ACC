@@ -45,50 +45,6 @@ env.ResetFcn = @(in)localResetFcn(in);
 
 rng('default');
 
-% L = 48; % number of neurons
-% 
-% statePath = [
-%     featureInputLayer(3,'Normalization','none','Name','observation')
-%     fullyConnectedLayer(L,'Name','fc1')
-%     reluLayer('Name','relu1')
-%     fullyConnectedLayer(L,'Name','fc2')
-%     additionLayer(2,'Name','add')
-%     reluLayer('Name','relu2')
-%     fullyConnectedLayer(L,'Name','fc3')
-%     reluLayer('Name','relu3')
-%     fullyConnectedLayer(1,'Name','fc4')];
-% 
-% actionPath = [
-%     featureInputLayer(1,'Normalization','none','Name','action')
-%     fullyConnectedLayer(L, 'Name', 'fc5')];
-% 
-% % The critic network tells how good the action found from the actor action 
-% % and how it should adjust 
-% criticNetwork = layerGraph(statePath);
-% criticNetwork = addLayers(criticNetwork, actionPath);
-%     
-% criticNetwork = connectLayers(criticNetwork,'fc5','add/in2');
-% 
-% plot(criticNetwork)
-% 
-% criticOptions = rlRepresentationOptions('LearnRate',1e-3,'GradientThreshold',1,'L2RegularizationFactor',1e-4);
-% 
-% critic = rlQValueRepresentation(criticNetwork,observationInfo,actionInfo,...
-%     'Observation',{'observation'},'Action',{'action'},criticOptions);
-% 
-% 
-% % The actor network decides which action should be taken
-% actorNetwork = [
-%     featureInputLayer(3,'Normalization','none','Name','observation')
-%     fullyConnectedLayer(L,'Name','fc1')
-%     reluLayer('Name','relu1')
-%     fullyConnectedLayer(L,'Name','fc2')
-%     reluLayer('Name','relu2')
-%     fullyConnectedLayer(L,'Name','fc3')
-%     reluLayer('Name','relu3')
-%     fullyConnectedLayer(1,'Name','fc4')
-%     tanhLayer('Name','tanh1')
-%     scalingLayer('Name','ActorScaling1','Scale',2.5,'Bias',-0.5)];
 
 % Change to a much smaller network
 L = 8; % number of neurons
